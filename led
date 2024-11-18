@@ -1,0 +1,37 @@
+#include <BluetoothSerial.h>
+BluetoothSerial SerialBT;
+int led1=4;
+int led2=2;
+void setup(){
+  Serial.begin(115200);
+  SerialBT.begin("SriTu Hobby");
+  Serial.println("the device started,now you can pair it");
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  digitalWrite(led1,LOW);
+  digitalWrite(led2,LOW);
+  }
+void loop(){
+  if(SerialBT.available()){
+    String value = SerialBT.readString();
+    Serial.println(value);
+    if(value == "turn on the bulb"){
+      digitalWrite(led1,HIGH);
+      digitalWrite(led2,LOW);
+      Serial.println("on");
+    }
+    else if(value == "turn off the bulb"){
+      digitalWrite(led1,LOW);
+      digitalWrite(led2,LOW);
+      Serial.println("off");
+    }
+    else{
+      digitalWrite(led2,HIGH);
+      delay(1000);
+      digitalWrite(led2,LOW);
+      delay(1000);
+      
+    }
+    
+  }
+}
